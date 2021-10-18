@@ -7,6 +7,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{3808EC48-FC26-40E5-A51E-F654ACA2E3E7}"
 ProjectSection(SolutionItems) = preProject
 	README.md = README.md
+	Dockerfile = Dockerfile
+	.gitignore = .gitignore
 EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OzonEdu.MerchandiseService", "src\OzonEdu.MerchandiseService\OzonEdu.MerchandiseService.csproj", "{5CEE2707-9CFB-4A55-8275-38587499D88C}"
