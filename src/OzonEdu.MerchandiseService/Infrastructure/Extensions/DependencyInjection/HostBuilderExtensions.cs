@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using OzonEdu.MerchandiseService.Infrastructure.Filters.Extensions.DependencyInjection;
+using OzonEdu.MerchandiseService.Infrastructure.Interceptors;
 using OzonEdu.MerchandiseService.Infrastructure.StartupFilters;
 
 namespace OzonEdu.MerchandiseService.Infrastructure.Extensions.DependencyInjection
@@ -32,7 +33,8 @@ namespace OzonEdu.MerchandiseService.Infrastructure.Extensions.DependencyInjecti
                         var xmlFilePath = Path.Combine(AppContext.BaseDirectory, xmlFileName);
                         options.IncludeXmlComments(xmlFilePath);
                     })
-                    .AddGlobalExceptionFilter();
+                    .AddGlobalExceptionFilter()
+                    .AddGrpc(options => options.Interceptors.Add<LoggingInterceptor>());
             });
 
             return builder;
