@@ -2,7 +2,7 @@
 {
     public class MerchandiseTicketCreationModel
     {
-        public MerchandiseTicketCreationModel(int employeeId, int itemId)
+        public MerchandiseTicketCreationModel(long employeeId, int itemId)
         {
             EmployeeId = employeeId;
             ItemId = itemId;
@@ -11,7 +11,7 @@
         /// <summary>
         /// Id сотрудника, которому выдается мерч
         /// </summary>
-        public int EmployeeId { get; }
+        public long EmployeeId { get; }
         
         /// <summary>
         /// Id предмета, который выдается в качестве мерча

@@ -22,7 +22,7 @@ namespace OzonEdu.MerchandiseService.Models
         /// <summary>
         /// Id сотрудника, которому выдается мерч
         /// </summary>
-        public int EmployeeId { get; }
+        public long EmployeeId { get; }
         
         /// <summary>
         /// Id предмета, который выдается в качестве мерча
