@@ -20,4 +20,8 @@
       <Folder Include="Infrastructure\Interceptors" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\OzonEdu.MerchandiseService.HttpModels\OzonEdu.MerchandiseService.HttpModels.csproj" />
+    </ItemGroup>
+
 </Project>
