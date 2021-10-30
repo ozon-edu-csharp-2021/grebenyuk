@@ -15,13 +15,13 @@ namespace OzonEdu.MerchandiseService.GrpcServices
             _merchandiseTicketsService = merchandiseTicketsService;
         }
         
-        public override async Task<GetTicketByEmployeeIdReply> GetTicketByEmployeeId(
+        public override async Task<GetTicketByEmployeeIdResponse> GetTicketByEmployeeId(
             GetTicketByEmployeeIdRequest request, 
             ServerCallContext context)
         {
             var ticket = await _merchandiseTicketsService.GetByIdAsync(request.EmployeeId, context.CancellationToken);
             
-            return new GetTicketByEmployeeIdReply
+            return new GetTicketByEmployeeIdResponse
             {
                 Ticket = new Ticket
                 {
@@ -32,13 +32,13 @@ namespace OzonEdu.MerchandiseService.GrpcServices
             };
         }
         
-        public override async Task<AddTicketReply> AddTicket(AddTicketRequest request, ServerCallContext context)
+        public override async Task<AddTicketResponse> AddTicket(AddTicketRequest request, ServerCallContext context)
         {
             var ticket = await _merchandiseTicketsService.AddAsync(
                 new MerchandiseTicketCreationModel(request.EmployeeId, request.ItemId), 
                 context.CancellationToken);
 
-            return new AddTicketReply
+            return new AddTicketResponse
             {
                 Ticket = new Ticket
                 {
