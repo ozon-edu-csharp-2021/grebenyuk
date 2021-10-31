@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option csharp_namespace = "OzonEdu.MerchandiseService.Grpc";
+
+package MerchandiseService;
+
+service MerchandiseService {
+  rpc GetTicketByEmployeeId(GetTicketByEmployeeIdRequest) returns (GetTicketByEmployeeIdResponse) {}
+  rpc AddTicket(AddTicketRequest) returns (AddTicketResponse) {}
+}
+
+message GetTicketByEmployeeIdRequest {
+  int64 employee_id = 1;
+}
+
+message GetTicketByEmployeeIdResponse {
+  Ticket ticket = 1;
+}
+
+message AddTicketRequest {
+  int64 employee_id = 1;
+  int32 item_id = 2;
+}
+
+message AddTicketResponse {
+  Ticket ticket = 1;
+}
+
+message Ticket {
+  int32 id = 1;
+  int64 employee_id = 2;
+  int32 item_id = 3;
+}
