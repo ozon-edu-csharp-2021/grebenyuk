@@ -1,6 +1,6 @@
 ﻿using OzonEdu.MerchandiseService.Domain.Models;
 
-namespace OzonEdu.MerchandiseService.Domain.AggregationModels.EmployeeMerchAggregate
+namespace OzonEdu.MerchandiseService.Domain.AggregationModels.ItemAggregate
 {
     public class ItemType : Enumeration
     {

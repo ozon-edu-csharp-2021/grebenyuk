@@ -3,7 +3,7 @@ using OzonEdu.MerchandiseService.Domain.AggregationModels.ValueObjects;
 using OzonEdu.MerchandiseService.Domain.Exceptions.EmployeeMerchAggregate;
 using OzonEdu.MerchandiseService.Domain.Models;
 
-namespace OzonEdu.MerchandiseService.Domain.AggregationModels.EmployeeMerchAggregate
+namespace OzonEdu.MerchandiseService.Domain.AggregationModels.ItemAggregate
 {
     public class Item : Entity
     {
