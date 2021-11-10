@@ -7,14 +7,14 @@ namespace OzonEdu.MerchandiseService.Domain.AggregationModels.EmployeeAggregate
 {
     public class Employee : Entity
     {
-        public int Id { get; }
+        public EmployeeId EmployeeId { get; }
         public Email Email { get; private set; }
 
         public Employee(
-            int id,
+            EmployeeId employeeId,
             Email email)
         {
-            Id = id;
+            EmployeeId = employeeId;
             SetEmail(email);
         }
 
