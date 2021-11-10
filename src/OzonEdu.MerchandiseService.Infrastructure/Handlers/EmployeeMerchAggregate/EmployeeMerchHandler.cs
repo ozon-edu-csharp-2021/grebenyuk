@@ -10,7 +10,7 @@ using OzonEdu.MerchandiseService.Infrastructure.Queries.EmployeeMerchAggregate;
 
 namespace OzonEdu.MerchandiseService.Infrastructure.Handlers.EmployeeMerchAggregate
 {
-    public class EmployeeMerchHandler : IRequestHandler<GetEmployeeMerch, EmployeeMerch>
+    public class EmployeeMerchHandler : IRequestHandler<GetEmployeeMerchQuery, EmployeeMerch>
     {
         private readonly ITicketRepository _ticketRepository;
 
@@ -19,7 +19,7 @@ namespace OzonEdu.MerchandiseService.Infrastructure.Handlers.EmployeeMerchAggreg
             _ticketRepository = ticketRepository;
         }
         
-        public async Task<EmployeeMerch> Handle(GetEmployeeMerch request, CancellationToken cancellationToken)
+        public async Task<EmployeeMerch> Handle(GetEmployeeMerchQuery request, CancellationToken cancellationToken)
         {
             // todo реализовать запрос к сервису сотрудников, для получения емейла
             // todo и валидации, что request.EmployeeId существует

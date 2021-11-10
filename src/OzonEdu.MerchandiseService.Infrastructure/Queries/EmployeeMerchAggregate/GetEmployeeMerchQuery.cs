@@ -3,7 +3,7 @@ using OzonEdu.MerchandiseService.Domain.AggregationModels.EmployeeMerchAggregate
 
 namespace OzonEdu.MerchandiseService.Infrastructure.Queries.EmployeeMerchAggregate
 {
-    public class GetEmployeeMerch : IRequest<EmployeeMerch>
+    public class GetEmployeeMerchQuery : IRequest<EmployeeMerch>
     {
         /// <summary>
         /// Id сотрудника
