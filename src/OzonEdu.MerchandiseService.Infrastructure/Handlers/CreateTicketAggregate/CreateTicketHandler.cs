@@ -7,6 +7,7 @@ using OzonEdu.MerchandiseService.Domain.AggregationModels.CreateTicketAggregate;
 using OzonEdu.MerchandiseService.Domain.AggregationModels.CreateTicketAggregate.Abstract;
 using OzonEdu.MerchandiseService.Domain.AggregationModels.EmployeeAggregate;
 using OzonEdu.MerchandiseService.Domain.AggregationModels.ValueObjects;
+using OzonEdu.MerchandiseService.Domain.Exceptions.CreateTicketAggregate;
 using OzonEdu.MerchandiseService.Infrastructure.Commands;
 
 namespace OzonEdu.MerchandiseService.Infrastructure.Handlers.CreateTicketAggregate
@@ -33,15 +34,16 @@ namespace OzonEdu.MerchandiseService.Infrastructure.Handlers.CreateTicketAggrega
             // Получаем все тикеты заведенные на этого сотрудника.
             var existTickets = await _ticketRepository.GetAllTicketsByEmployeeIdAsync(employee.EmployeeId, cancellationToken);
 
+            var skuForNewTicket = new Sku(request.Sku);
             // Проверяем: если такой мерч сотруднику уже выдавался, то кидаем исключение.
-            if (existTickets.FirstOrDefault(t => t.Sku.Value == request.Sku) is not null)
+            if (existTickets.FirstOrDefault(t => t.Sku.Equals(skuForNewTicket)) is not null)
             {
-                throw new Exception();
+                throw new MerchAlreadyGivenOutException("Merch is already given out this employee.");
             }
 
             // Если все валидации пройдены, то создаем новый тикет и берем его в работу.
             var newTicket = new Ticket(employee);
-            newTicket.StartWork(new Sku(request.Sku));
+            newTicket.StartWork(skuForNewTicket);
             
             // Так же фиксируем в БД.
             var createdTicket = await _ticketRepository.CreateAsync(newTicket, cancellationToken);
