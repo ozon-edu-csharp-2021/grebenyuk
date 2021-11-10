@@ -27,7 +27,7 @@ namespace OzonEdu.MerchandiseService.GrpcServices
                 {
                     Id = ticket.Id,
                     EmployeeId = ticket.EmployeeId,
-                    ItemId = ticket.ItemId
+                    Sku = ticket.Sku
                 }
             };
         }
@@ -35,7 +35,7 @@ namespace OzonEdu.MerchandiseService.GrpcServices
         public override async Task<AddTicketResponse> AddTicket(AddTicketRequest request, ServerCallContext context)
         {
             var ticket = await _merchandiseTicketsService.AddAsync(
-                new MerchandiseTicketCreationModel(request.EmployeeId, request.ItemId), 
+                new MerchandiseTicketCreationModel(request.EmployeeId, request.Sku), 
                 context.CancellationToken);
 
             return new AddTicketResponse
@@ -44,7 +44,7 @@ namespace OzonEdu.MerchandiseService.GrpcServices
                 {
                     Id = ticket.Id,
                     EmployeeId = ticket.EmployeeId,
-                    ItemId = ticket.ItemId
+                    Sku = ticket.Sku
                 }
             };
         }
