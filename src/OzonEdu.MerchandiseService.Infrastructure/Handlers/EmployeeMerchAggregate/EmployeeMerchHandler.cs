@@ -6,7 +6,6 @@ using OzonEdu.MerchandiseService.Domain.AggregationModels.CreateTicketAggregate.
 using OzonEdu.MerchandiseService.Domain.AggregationModels.EmployeeAggregate;
 using OzonEdu.MerchandiseService.Domain.AggregationModels.EmployeeMerchAggregate;
 using OzonEdu.MerchandiseService.Domain.AggregationModels.ItemAggregate;
-using OzonEdu.MerchandiseService.Domain.AggregationModels.ValueObjects;
 using OzonEdu.MerchandiseService.Infrastructure.Queries.EmployeeMerchAggregate;
 
 namespace OzonEdu.MerchandiseService.Infrastructure.Handlers.EmployeeMerchAggregate
@@ -35,7 +34,7 @@ namespace OzonEdu.MerchandiseService.Infrastructure.Handlers.EmployeeMerchAggreg
             // Если тикетов по юзеру нет, то возвращаем пустоту т.к мерч ему ни разу не выдавался.
             if (!existTickets.Any())
             {
-                return new EmployeeMerch(new Item[] { });
+                return null;
             }
             
             // todo из тикетов взять Sku и по этим Sku спросить у StockApi наименование предметов?
