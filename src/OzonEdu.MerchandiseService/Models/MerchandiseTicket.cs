@@ -5,11 +5,11 @@ namespace OzonEdu.MerchandiseService.Models
     public class MerchandiseTicket
     {
         //todo сделать метод мапящий в response
-        public MerchandiseTicket(int id, int employeeId, int itemId)
+        public MerchandiseTicket(long id, long employeeId, long sku)
         {
             Id = id;
             EmployeeId = employeeId;
-            ItemId = itemId;
+            Sku = sku;
             Status = TicketStatus.Backlog;
             CreatedAt = DateTime.UtcNow;
         }
@@ -17,7 +17,7 @@ namespace OzonEdu.MerchandiseService.Models
         /// <summary>
         /// Id задачи на выдачу мерча
         /// </summary>
-        public int Id { get; }
+        public long Id { get; }
         
         /// <summary>
         /// Id сотрудника, которому выдается мерч
@@ -27,7 +27,7 @@ namespace OzonEdu.MerchandiseService.Models
         /// <summary>
         /// Id предмета, который выдается в качестве мерча
         /// </summary>
-        public int ItemId { get; }
+        public long Sku { get; }
 
         /// <summary>
         /// Статус задачи на выдачу

@@ -2,10 +2,10 @@
 {
     public class MerchandiseTicketCreationModel
     {
-        public MerchandiseTicketCreationModel(long employeeId, int itemId)
+        public MerchandiseTicketCreationModel(long employeeId, long sku)
         {
             EmployeeId = employeeId;
-            ItemId = itemId;
+            Sku = sku;
         }
 
         /// <summary>
@@ -14,8 +14,8 @@
         public long EmployeeId { get; }
         
         /// <summary>
-        /// Id предмета, который выдается в качестве мерча
+        /// Товарная позиция, которая выдается в качестве мерча
         /// </summary>
-        public int ItemId { get; }
+        public long Sku { get; }
     }
 }

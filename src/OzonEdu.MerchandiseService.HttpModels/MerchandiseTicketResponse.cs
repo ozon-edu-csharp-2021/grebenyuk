@@ -2,8 +2,8 @@
 {
     public class MerchandiseTicketResponse
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public long EmployeeId { get; set; }
-        public int ItemId { get; set; }
+        public long Sku { get; set; }
     }
 }
