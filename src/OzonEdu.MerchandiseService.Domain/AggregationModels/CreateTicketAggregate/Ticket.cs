@@ -43,15 +43,6 @@ namespace OzonEdu.MerchandiseService.Domain.AggregationModels.CreateTicketAggreg
             Employee = employee;
             CreateNewTicket();
         }
-        
-        public Ticket(
-            Employee employee,
-            Sku sku)
-        {
-            Employee = employee;
-            CreateNewTicket();
-            StartWork(sku);
-        }
 
         private void CreateNewTicket()
         {
