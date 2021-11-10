@@ -2,7 +2,7 @@
 
 namespace OzonEdu.MerchandiseService.Infrastructure.Commands
 {
-    public class CreateTicketCommand : IRequest<int>
+    public class CreateTicketCommand : IRequest<long>
     {
         /// <summary>
         /// Id сотрудника
