@@ -20,9 +20,16 @@ namespace OzonEdu.MerchandiseService.Domain.AggregationModels.EmployeeAggregate
 
         private void SetEmail(Email email)
         {
-            if (email is null) throw new ArgumentNullException($"{nameof(email)} is null.");
-            
-            if (!IsValidEmail(email.Value)) throw new InvalidEmailException($"Email is invalid: {email.Value}.");
+            if (email is null
+                || string.IsNullOrEmpty(email.Value))
+            {
+                throw new InvalidEmailException($"{nameof(email)} is null.");
+            }
+
+            if (!IsValidEmail(email.Value))
+            {
+                throw new InvalidEmailException($"Email is invalid: {email.Value}.");
+            }
             
             Email = email;
         }

@@ -43,10 +43,13 @@ namespace OzonEdu.MerchandiseService.Domain.AggregationModels.ItemAggregate
                     || ItemType.Equals(ItemType.Sweatshirt)))
             {
                 ClothingSize = clothingSize;
+                return;
             }
-            else if (clothingSize is null)
+
+            if (clothingSize is null)
             {
                 ClothingSize = null;
+                return;
             }
 
             throw new ClothingSizeException($"Item with type {ItemType.Name} cannot get size.");

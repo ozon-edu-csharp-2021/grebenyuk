@@ -62,7 +62,7 @@ namespace OzonEdu.MerchandiseService.Domain.AggregationModels.CreateTicketAggreg
                 throw new InvalidTicketStatusException($"{nameof(TicketStatus)} should be in \"{nameof(TicketStatus.Backlog)}\" status.");
             }
 
-            Sku = sku;
+            Sku = sku ?? throw new ArgumentNullException($"{nameof(Sku)} cannot be null.");
             TicketStatus = TicketStatus.InWork;
             UpdatedAt = DateTime.UtcNow;
         }
