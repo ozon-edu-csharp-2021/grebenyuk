@@ -6,7 +6,7 @@ namespace OzonEdu.MerchandiseService.HttpClient.Abstract
 {
     public interface IMerchandiseHttpClient
     {
-        Task<EmployeeMerchResponse> GetByIdAsync(long id, CancellationToken token);
-        Task<EmployeeMerchResponse> AddAsync(MerchandiseTicketPostRequest ticket, CancellationToken token);
+        Task<EmployeeMerchResponse> GetAllMerchByEmployeeIdAsync(long employeeId, CancellationToken token);
+        Task<long> AddAsync(MerchandiseTicketPostRequest ticket, CancellationToken token);
     }
 }

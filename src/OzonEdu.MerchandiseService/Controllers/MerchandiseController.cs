@@ -28,9 +28,10 @@ namespace OzonEdu.MerchandiseService.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet("{employeeId:long}")]
-        public async Task<ActionResult<EmployeeMerchResponse>> GetById(long employeeId, CancellationToken cancellationToken)
+        public async Task<ActionResult<EmployeeMerchResponse>> GetAllMerchByEmployeeId(long employeeId, 
+            CancellationToken cancellationToken)
         {
-            var query = new GetEmployeeMerch
+            var query = new GetEmployeeMerchQuery
             {
                 EmployeeId = employeeId
             };

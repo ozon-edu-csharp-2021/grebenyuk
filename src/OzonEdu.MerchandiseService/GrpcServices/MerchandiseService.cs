@@ -1,51 +1,67 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Grpc.Core;
+using MediatR;
 using OzonEdu.MerchandiseService.Grpc;
-using OzonEdu.MerchandiseService.Models;
-using OzonEdu.MerchandiseService.Services.Abstract;
+using OzonEdu.MerchandiseService.Infrastructure.Commands;
+using OzonEdu.MerchandiseService.Infrastructure.Queries.EmployeeMerchAggregate;
 
 namespace OzonEdu.MerchandiseService.GrpcServices
 {
     public class MerchandiseService : OzonEdu.MerchandiseService.Grpc.MerchandiseService.MerchandiseServiceBase
     {
-        private readonly IMerchandiseTicketsService _merchandiseTicketsService;
+        private readonly IMediator _mediator;
 
-        public MerchandiseService(IMerchandiseTicketsService merchandiseTicketsService)
+        public MerchandiseService(IMediator mediator)
         {
-            _merchandiseTicketsService = merchandiseTicketsService;
+            _mediator = mediator;
         }
         
-        public override async Task<GetTicketByEmployeeIdResponse> GetTicketByEmployeeId(
-            GetTicketByEmployeeIdRequest request, 
+        public override async Task<GetAllMerchByEmployeeIdResponse> GetAllMerchByEmployeeId(
+            GetAllMerchByEmployeeIdRequest request, 
             ServerCallContext context)
         {
-            var ticket = await _merchandiseTicketsService.GetByIdAsync(request.EmployeeId, context.CancellationToken);
-            
-            return new GetTicketByEmployeeIdResponse
+            var query = new GetEmployeeMerchQuery
             {
-                Ticket = new Ticket
+                EmployeeId = request.EmployeeId
+            };
+            
+            var result = await _mediator.Send(query, context.CancellationToken);
+
+            if (result is null)
+            {
+                throw new RpcException(new Status(StatusCode.NotFound, "This employee has never received any merch."));
+            }
+
+            return new GetAllMerchByEmployeeIdResponse
+            {
+                Items =
                 {
-                    Id = ticket.Id,
-                    EmployeeId = ticket.EmployeeId,
-                    Sku = ticket.Sku
+                    // todo ок или не ок?
+                    result.Items.Select(i => new GetAllMerchByEmployeeIdResponse.Types.Item
+                    {
+                        Sku = i.Sku.Value,
+                        Name = i.Name.Value,
+                        ClothingSizeId = i.ClothingSize.Id,
+                        ItemTypeId = i.ItemType.Id
+                    })
                 }
             };
         }
         
         public override async Task<AddTicketResponse> AddTicket(AddTicketRequest request, ServerCallContext context)
         {
-            var ticket = await _merchandiseTicketsService.AddAsync(
-                new MerchandiseTicketCreationModel(request.EmployeeId, request.Sku), 
-                context.CancellationToken);
+            var command = new CreateTicketCommand
+            {
+                EmployeeId = request.EmployeeId,
+                Sku = request.Sku
+            };
+
+            var createdTicketId = await _mediator.Send(command, context.CancellationToken);
 
             return new AddTicketResponse
             {
-                Ticket = new Ticket
-                {
-                    Id = ticket.Id,
-                    EmployeeId = ticket.EmployeeId,
-                    Sku = ticket.Sku
-                }
+                TicketId = createdTicketId
             };
         }
     }
