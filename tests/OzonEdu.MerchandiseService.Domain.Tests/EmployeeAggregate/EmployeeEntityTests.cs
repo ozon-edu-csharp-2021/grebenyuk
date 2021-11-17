@@ -4,10 +4,10 @@ using Xunit;
 
 namespace OzonEdu.MerchandiseService.Domain.Tests.EmployeeAggregate
 {
-    public class EmployeeEntityTests_Should
+    public class EmployeeEntityTests
     {
         [Fact]
-        public void Ok_OnCreateEmployeeInstance()
+        public void CreateInstance_ValidParameters_Success()
         {
             //Arrange
             var expectedEmployeeId = 10;
@@ -26,7 +26,7 @@ namespace OzonEdu.MerchandiseService.Domain.Tests.EmployeeAggregate
         [Theory]
         [InlineData("wrong_email")]
         [InlineData(null)]
-        public void NotOk_OnCreateEmployeeInstanceWithInvalidEmail(string email)
+        public void CreateInstance_InvalidEmail_ExceptionThrown(string email)
         {
             //Arrange
 

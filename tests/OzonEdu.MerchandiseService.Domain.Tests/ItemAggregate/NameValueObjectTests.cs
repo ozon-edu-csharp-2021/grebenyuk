@@ -3,10 +3,10 @@ using Xunit;
 
 namespace OzonEdu.MerchandiseService.Domain.Tests.ItemAggregate
 {
-    public class NameValueObjectTests_Should
+    public class NameValueObjectTests
     {
         [Fact]
-        public void Ok_OnCreateNameInstance()
+        public void CreateInstance_ValidParameters_Success()
         {
             //Arrange
             var expectedName = "Кроссовки";

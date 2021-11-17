@@ -1,12 +1,12 @@
 ﻿using OzonEdu.MerchandiseService.Domain.AggregationModels.CreateTicketAggregate;
 using Xunit;
 
-namespace OzonEdu.MerchandiseService.Domain.Tests.EmployeeAggregate
+namespace OzonEdu.MerchandiseService.Domain.Tests.CreateTicketAggregate
 {
-    public class TicketNumberValueObjectTests_Should
+    public class TicketNumberValueObjectTests
     {
         [Fact]
-        public void Ok_OnCreateTicketNumberInstance()
+        public void CreateInstance_ValidParameters_Success()
         {
             //Arrange
             var expectedTicketNumber = 10;

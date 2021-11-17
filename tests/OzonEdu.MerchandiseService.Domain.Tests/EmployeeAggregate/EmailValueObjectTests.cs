@@ -3,10 +3,10 @@ using Xunit;
 
 namespace OzonEdu.MerchandiseService.Domain.Tests.EmployeeAggregate
 {
-    public class EmailValueObjectTests_Should
+    public class EmailValueObjectTests
     {
         [Fact]
-        public void Ok_OnCreateEmailInstance()
+        public void CreateInstance_ValidParameters_Success()
         {
             //Arrange
             var expectedEmail = "test@gmail.com";

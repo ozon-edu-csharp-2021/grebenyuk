@@ -3,10 +3,10 @@ using Xunit;
 
 namespace OzonEdu.MerchandiseService.Domain.Tests.EmployeeAggregate
 {
-    public class EmployeeIdValueObjectTests_Should
+    public class EmployeeIdValueObjectTests
     {
         [Fact]
-        public void Ok_OnCreateEmployeeIdInstance()
+        public void CreateInstance_ValidParameters_Success()
         {
             //Arrange
             var expectedEmployeeId = 10;

@@ -3,10 +3,10 @@ using Xunit;
 
 namespace OzonEdu.MerchandiseService.Domain.Tests.SkuAggregate
 {
-    public class SkuValueObjectTests_Should
+    public class SkuValueObjectTests
     {
         [Fact]
-        public void Ok_CreateSkuInstance()
+        public void CreateInstance_ValidParameters_Success()
         {
             //Arrange
             var expectedSku = 10;

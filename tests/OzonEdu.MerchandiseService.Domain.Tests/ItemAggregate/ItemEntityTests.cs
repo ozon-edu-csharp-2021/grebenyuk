@@ -5,10 +5,10 @@ using Xunit;
 
 namespace OzonEdu.MerchandiseService.Domain.Tests.ItemAggregate
 {
-    public class ItemEntityTests_Should
+    public class ItemEntityTests
     {
         [Fact]
-        public void Ok_OnCreateItemInstance()
+        public void CreateInstance_ValidParameters_Success()
         {
             //Arrange
             var expectedSku = 15;
@@ -31,7 +31,7 @@ namespace OzonEdu.MerchandiseService.Domain.Tests.ItemAggregate
         }
 
         [Fact]
-        public void NotOk_OnCreateItemInstanceWithInvalidClothingSizeAndItemType()
+        public void CreateInstance_InvalidClothingSizeAndItemType_ExceptionThrown()
         {
             //Arrange
 
@@ -48,7 +48,7 @@ namespace OzonEdu.MerchandiseService.Domain.Tests.ItemAggregate
         }
         
         [Fact]
-        public void NotOk_OnCreateItemInstanceWithInvalidName()
+        public void CreateInstance_InvalidName_ExceptionThrown()
         {
             //Arrange
 

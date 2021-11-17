@@ -4,12 +4,12 @@ using OzonEdu.MerchandiseService.Domain.AggregationModels.ValueObjects;
 using OzonEdu.MerchandiseService.Domain.Exceptions.CreateTicketAggregate;
 using Xunit;
 
-namespace OzonEdu.MerchandiseService.Domain.Tests.EmployeeAggregate
+namespace OzonEdu.MerchandiseService.Domain.Tests.CreateTicketAggregate
 {
-    public class TicketEntityTests_Should
+    public class TicketEntityTests
     {
         [Fact]
-        public void Ok_OnCreateTicketInstance()
+        public void CreateInstance_ValidParameters_Success()
         {
             //Arrange
             var expectedEmployee = new Employee(
@@ -29,7 +29,7 @@ namespace OzonEdu.MerchandiseService.Domain.Tests.EmployeeAggregate
         }
         
         [Fact]
-        public void Ok_OnTicketStartWork()
+        public void StartWork_TicketStatusBacklog_TicketStatusInWork()
         {
             //Arrange
             var expectedEmployee = new Employee(
@@ -49,7 +49,7 @@ namespace OzonEdu.MerchandiseService.Domain.Tests.EmployeeAggregate
         }
         
         [Fact]
-        public void Ok_OnTicketCompleteWork()
+        public void CompleteWork_TicketStatusInWork_TicketStatusDone()
         {
             //Arrange
             var expectedEmployee = new Employee(
@@ -70,7 +70,7 @@ namespace OzonEdu.MerchandiseService.Domain.Tests.EmployeeAggregate
         }
         
         [Fact]
-        public void NotOk_OnTicketStartWork()
+        public void StartWork_TicketStatusDone_ExceptionThrown()
         {
             //Arrange
             var expectedEmployee = new Employee(
@@ -88,7 +88,7 @@ namespace OzonEdu.MerchandiseService.Domain.Tests.EmployeeAggregate
         }
 
         [Fact]
-        public void NotOk_OnTicketCompleteWork()
+        public void CompleteWork_TicketStatusBacklog_ExceptionThrown()
         {
             //Arrange
             var employee = new Employee(
