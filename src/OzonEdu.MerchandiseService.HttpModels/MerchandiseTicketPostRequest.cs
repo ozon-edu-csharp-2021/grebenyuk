@@ -3,6 +3,6 @@
     public class MerchandiseTicketPostRequest
     {
         public long EmployeeId { get; set; }
-        public int ItemId { get; set; }
+        public long Sku { get; set; }
     }
 }

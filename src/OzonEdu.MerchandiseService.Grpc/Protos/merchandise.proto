@@ -5,29 +5,30 @@ option csharp_namespace = "OzonEdu.MerchandiseService.Grpc";
 package MerchandiseService;
 
 service MerchandiseService {
-  rpc GetTicketByEmployeeId(GetTicketByEmployeeIdRequest) returns (GetTicketByEmployeeIdResponse) {}
+  rpc GetAllMerchByEmployeeId(GetAllMerchByEmployeeIdRequest) returns (GetAllMerchByEmployeeIdResponse) {}
   rpc AddTicket(AddTicketRequest) returns (AddTicketResponse) {}
 }
 
-message GetTicketByEmployeeIdRequest {
+message GetAllMerchByEmployeeIdRequest {
   int64 employee_id = 1;
 }
 
-message GetTicketByEmployeeIdResponse {
-  Ticket ticket = 1;
+message GetAllMerchByEmployeeIdResponse {
+  repeated Item items = 1;
+
+  message Item {
+    int64 sku = 1;
+    string name = 2;
+    int32 clothing_size_id = 3;
+    int32 item_type_id = 4;
+  }
 }
 
 message AddTicketRequest {
   int64 employee_id = 1;
-  int32 item_id = 2;
+  int64 sku = 2;
 }
 
 message AddTicketResponse {
-  Ticket ticket = 1;
-}
-
-message Ticket {
-  int32 id = 1;
-  int64 employee_id = 2;
-  int32 item_id = 3;
+  int64 ticket_id = 1;
 }

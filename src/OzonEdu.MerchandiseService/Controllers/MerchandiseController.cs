@@ -1,9 +1,11 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using OzonEdu.MerchandiseService.HttpModels;
-using OzonEdu.MerchandiseService.Models;
-using OzonEdu.MerchandiseService.Services.Abstract;
+using OzonEdu.MerchandiseService.Infrastructure.Commands;
+using OzonEdu.MerchandiseService.Infrastructure.Queries.EmployeeMerchAggregate;
 
 namespace OzonEdu.MerchandiseService.Controllers
 {
@@ -12,60 +14,69 @@ namespace OzonEdu.MerchandiseService.Controllers
     [Produces("application/json")]
     public class MerchandiseController : ControllerBase
     {
-        private readonly IMerchandiseTicketsService _merchandiseTicketsService;
+        private readonly IMediator _mediator;
 
-        public MerchandiseController(IMerchandiseTicketsService merchandiseTicketsService)
+        public MerchandiseController(IMediator mediator)
         {
-            _merchandiseTicketsService = merchandiseTicketsService;
+            _mediator = mediator;
         }
         
         /// <summary>
         /// Получить информацию о выдаче мерча
         /// </summary>
         /// <param name="employeeId">Employee id</param>
-        /// <param name="token"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet("{employeeId:long}")]
-        public async Task<ActionResult<MerchandiseTicketResponse>> GetById(long employeeId, CancellationToken token)
+        public async Task<ActionResult<EmployeeMerchResponse>> GetAllMerchByEmployeeId(long employeeId, 
+            CancellationToken cancellationToken)
         {
-            var merchandiseTicket = await _merchandiseTicketsService.GetByIdAsync(employeeId, token);
-            if (merchandiseTicket is null)
+            var query = new GetEmployeeMerchQuery
+            {
+                EmployeeId = employeeId
+            };
+            
+            var result = await _mediator.Send(query, cancellationToken);
+
+            if (result is null)
             {
                 return NotFound();
             }
 
-            // todo map MerchandiseTicket to MerchandiseTicketResponse
-            var response = new MerchandiseTicketResponse
+            // todo ок или не ок?
+            var response = new EmployeeMerchResponse
             {
-                Id = merchandiseTicket.Id,
-                EmployeeId = merchandiseTicket.EmployeeId,
-                ItemId = merchandiseTicket.ItemId,
+                Items = result.Items.Select(i => new Item
+                {
+                    Sku = i.Sku.Value,
+                    Name = i.Name.Value,
+                    ClothingSizeId = i.ClothingSize.Id,
+                    ItemTypeId = i.ItemType.Id
+                })
             };
+            
             return Ok(response);
         }
 
         /// <summary>
-        /// 
+        /// Создать тикет на выдачу мерча
         /// </summary>
         /// <param name="request"></param>
-        /// <param name="token"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult<MerchandiseTicketResponse>> Add(MerchandiseTicketPostRequest request, 
-            CancellationToken token)
+        public async Task<ActionResult<long>> Add(MerchandiseTicketPostRequest request, 
+            CancellationToken cancellationToken)
         {
-            var createdTicket = await _merchandiseTicketsService.AddAsync(
-                new MerchandiseTicketCreationModel(request.EmployeeId, request.ItemId),
-                token);
-            
-            // todo map MerchandiseTicket to MerchandiseTicketResponse
-            var response = new MerchandiseTicketResponse
+            var command = new CreateTicketCommand
             {
-                Id = createdTicket.Id,
-                EmployeeId = createdTicket.EmployeeId,
-                ItemId = createdTicket.ItemId,
+                EmployeeId = request.EmployeeId,
+                Sku = request.Sku
             };
-            return Ok(response);
+
+            var createdTicketId = await _mediator.Send(command, cancellationToken);
+            
+            return Ok(createdTicketId);
         }
     }
 }
