@@ -4,10 +4,11 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Npgsql;
 using OzonEdu.MerchandiseService.Infrastructure.Configuration;
+using OzonEdu.MerchandiseService.Infrastructure.Repositories.Infrastructure.Abstract;
 
 namespace OzonEdu.MerchandiseService.Infrastructure.Repositories.Infrastructure
 {
-    public class NpgsqlConnectionFactory
+    public class NpgsqlConnectionFactory : IDbConnectionFactory<NpgsqlConnection>
     {
         private readonly DatabaseConnectionOptions _options;
         private NpgsqlConnection _connection;
@@ -16,7 +17,6 @@ namespace OzonEdu.MerchandiseService.Infrastructure.Repositories.Infrastructure
         {
             _options = options.Value;
         }
-
 
         public async Task<NpgsqlConnection> CreateConnection(CancellationToken cancellationToken)
         {
