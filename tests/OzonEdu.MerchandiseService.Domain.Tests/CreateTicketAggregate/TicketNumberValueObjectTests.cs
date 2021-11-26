@@ -9,7 +9,7 @@ namespace OzonEdu.MerchandiseService.Domain.Tests.CreateTicketAggregate
         public void CreateInstance_ValidParameters_Success()
         {
             //Arrange
-            var expectedTicketNumber = 10;
+            ulong expectedTicketNumber = 10;
 
             //Act
             var actualTicketNumber = new TicketNumber(expectedTicketNumber);
