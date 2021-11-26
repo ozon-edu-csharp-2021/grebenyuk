@@ -37,8 +37,7 @@ namespace OzonEdu.MerchandiseService.Infrastructure.Handlers.EmployeeMerchAggreg
                 return null;
             }
             
-            // todo из тикетов взять Sku и по этим Sku спросить у StockApi наименование предметов?
-            // todo или у какого-то другого сервиса?
+            // todo из тикетов взять Sku и по этим Sku спросить у StockApi наименование предметов
             var allEmployeeMerch = new EmployeeMerch(
                 existTickets.Select(t => new Item(t.Sku, null, null, null)).ToList().AsReadOnly()
             );
