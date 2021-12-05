@@ -11,7 +11,7 @@ namespace OzonEdu.MerchandiseService.Domain.AggregationModels.CreateTicketAggreg
         /// <summary>
         /// Номер заявки на выдачу мерча
         /// </summary>
-        public TicketNumber TicketNumber { get; }
+        public TicketNumber TicketNumber { get; private set;  }
         
         /// <summary>
         /// Сотрудник, которому выдается мерч
@@ -42,6 +42,20 @@ namespace OzonEdu.MerchandiseService.Domain.AggregationModels.CreateTicketAggreg
         {
             Employee = employee;
             CreateNewTicket();
+        }
+        
+        public Ticket(
+            Employee employee,
+            Sku sku,
+            TicketStatus ticketStatus,
+            DateTime createdAt,
+            DateTime? updatedAt)
+        {
+            Employee = employee;
+            Sku = sku;
+            TicketStatus = ticketStatus;
+            CreatedAt = createdAt;
+            UpdatedAt = updatedAt;
         }
 
         private void CreateNewTicket()
@@ -79,6 +93,11 @@ namespace OzonEdu.MerchandiseService.Domain.AggregationModels.CreateTicketAggreg
 
             TicketStatus = TicketStatus.Done;
             UpdatedAt = DateTime.UtcNow;
+        }
+
+        public void SetTicketNumber(ulong id)
+        {
+            TicketNumber = new TicketNumber(id);
         }
     }
 }

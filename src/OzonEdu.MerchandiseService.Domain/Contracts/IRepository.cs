@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using OzonEdu.MerchandiseService.Domain.Models;
 
 namespace OzonEdu.MerchandiseService.Domain.Contracts
 {
@@ -7,27 +8,22 @@ namespace OzonEdu.MerchandiseService.Domain.Contracts
     /// Базовый интерфейс репозитория
     /// </summary>
     /// <typeparam name="TAggregationRoot">Объект сущности для управления</typeparam>
-    public interface IRepository<TAggregationRoot>
+    public interface IRepository<TEntity> where TEntity : Entity
     {
-        /// <summary>
-        /// Объект <see cref="IUnitOfWork"/>
-        /// </summary>
-        IUnitOfWork UnitOfWork { get; }
-        
         /// <summary>
         /// Создать новую сущность
         /// </summary>
-        /// <param name="itemToCreate">Объект для создания</param>
+        /// <param name="ticketToCreate">Объект для создания</param>
         /// <param name="cancellationToken">Токен для отмены операции. <see cref="CancellationToken"/></param>
         /// <returns>Созданная сущность</returns>
-        Task<TAggregationRoot> CreateAsync(TAggregationRoot itemToCreate, CancellationToken cancellationToken = default);
+        Task<TEntity> CreateAsync(TEntity ticketToCreate, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Обновить существующую сущность
         /// </summary>
-        /// <param name="itemToUpdate">Объект для создания</param>
+        /// <param name="ticketToUpdate">Объект для создания</param>
         /// <param name="cancellationToken">Токен для отмены операции. <see cref="CancellationToken"/></param>
         /// <returns>Обновленная сущность сущность</returns>
-        Task<TAggregationRoot> UpdateAsync(TAggregationRoot itemToUpdate, CancellationToken cancellationToken = default);
+        Task<TEntity> UpdateAsync(TEntity ticketToUpdate, CancellationToken cancellationToken = default);
     }
 }

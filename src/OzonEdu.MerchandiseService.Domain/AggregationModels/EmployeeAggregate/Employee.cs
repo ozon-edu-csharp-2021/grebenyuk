@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using OzonEdu.MerchandiseService.Domain.Exceptions.EmployeeAggregate;
 using OzonEdu.MerchandiseService.Domain.Models;
 
@@ -15,10 +14,20 @@ namespace OzonEdu.MerchandiseService.Domain.AggregationModels.EmployeeAggregate
             Email email)
         {
             EmployeeId = employeeId;
-            SetEmail(email);
+            InternalSetEmail(email);
+        }
+        
+        public Employee(EmployeeId employeeId)
+        {
+            EmployeeId = employeeId;
         }
 
-        private void SetEmail(Email email)
+        public void SetEmail(Email email)
+        {
+            InternalSetEmail(email);
+        }
+        
+        private void InternalSetEmail(Email email)
         {
             if (email is null
                 || string.IsNullOrEmpty(email.Value))

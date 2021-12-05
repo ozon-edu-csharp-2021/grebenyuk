@@ -5,9 +5,9 @@ namespace OzonEdu.MerchandiseService.Domain.AggregationModels.CreateTicketAggreg
 {
     public class TicketNumber : ValueObject
     {
-        public long Value { get; }
+        public ulong Value { get; }
 
-        public TicketNumber(long value)
+        public TicketNumber(ulong value)
         {
             Value = value;
         }

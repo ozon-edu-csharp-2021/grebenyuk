@@ -6,6 +6,7 @@ using OzonEdu.MerchandiseService.Domain.AggregationModels.CreateTicketAggregate;
 using OzonEdu.MerchandiseService.Domain.AggregationModels.CreateTicketAggregate.Abstract;
 using OzonEdu.MerchandiseService.Domain.AggregationModels.EmployeeAggregate;
 using OzonEdu.MerchandiseService.Domain.AggregationModels.ValueObjects;
+using OzonEdu.MerchandiseService.Domain.Contracts;
 using OzonEdu.MerchandiseService.Domain.Exceptions.CreateTicketAggregate;
 using OzonEdu.MerchandiseService.Infrastructure.Commands;
 
@@ -14,10 +15,12 @@ namespace OzonEdu.MerchandiseService.Infrastructure.Handlers.CreateTicketAggrega
     public class CreateTicketHandler : IRequestHandler<CreateTicketCommand, long>
     {
         private readonly ITicketRepository _ticketRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CreateTicketHandler(ITicketRepository ticketRepository)
+        public CreateTicketHandler(ITicketRepository ticketRepository, IUnitOfWork unitOfWork)
         {
             _ticketRepository = ticketRepository;
+            _unitOfWork = unitOfWork;
         }
         
         public async Task<long> Handle(CreateTicketCommand request, CancellationToken cancellationToken)
@@ -45,12 +48,13 @@ namespace OzonEdu.MerchandiseService.Infrastructure.Handlers.CreateTicketAggrega
             newTicket.StartWork(skuForNewTicket);
             
             // Так же фиксируем в БД.
+            await _unitOfWork.StartTransaction(cancellationToken);
             var createdTicket = await _ticketRepository.CreateAsync(newTicket, cancellationToken);
-            await _ticketRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             // todo нужно запросить выдачу мерча у StockApi
             
-            return createdTicket.TicketNumber.Value;
+            return (long)createdTicket.TicketNumber.Value;
         }
     }
 }
